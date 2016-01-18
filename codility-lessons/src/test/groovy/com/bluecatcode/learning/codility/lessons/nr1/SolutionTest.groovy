@@ -7,7 +7,7 @@ class SolutionTest extends Specification {
 
     @Unroll("input: #input, result: #result")
     def "Solution"() {
-        setup:
+        given:
         def solution = new Solution()
 
         expect:
@@ -19,6 +19,7 @@ class SolutionTest extends Specification {
         529   | 4
         20    | 1
         15    | 0
+        16    | 0
         1041  | 5
     }
 }

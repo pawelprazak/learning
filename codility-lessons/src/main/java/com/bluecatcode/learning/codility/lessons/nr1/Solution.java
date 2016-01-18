@@ -1,8 +1,6 @@
 package com.bluecatcode.learning.codility.lessons.nr1;
-import java.util.stream.IntStream;
 
-import static org.valid4j.Assertive.ensure;
-import static org.valid4j.Assertive.require;
+import static java.lang.Math.abs;
 
 /**
  * expected worst-case time complexity is O(log(N))
@@ -10,14 +8,33 @@ import static org.valid4j.Assertive.require;
  */
 public class Solution {
 
+    private static final int BASE_2 = 2;
+
     public int solution(int number) {
-        require(number > 0);
+        System.out.println("#" + Integer.toBinaryString(number));
 
-        IntStream chars = Integer.toBinaryString(number).chars();
-        int count = (int) chars.filter(v -> v == '0').count();
+        int n = abs(number);
 
-        ensure(count >= 0);
-        return count;
+        int maxCount = 0;
+        int zeroCount = 0;
+        boolean wasOneEncountered = false;
+        do {
+            int digit = n % BASE_2;
+            if (digit == 0) {
+                if (wasOneEncountered) {
+                    zeroCount++;
+                }
+            } else {
+                wasOneEncountered = true;
+                maxCount = max(maxCount, zeroCount);
+                zeroCount = 0;
+            }
+        } while ((n /= BASE_2) > 0);
+
+        return maxCount;
     }
 
+    public static int max(int first, int second) {
+        return first > second ? first: second;
+    }
 }
